@@ -25,31 +25,15 @@
                 <th>total</th>
               <!--   <th>Aksi</th> -->
             </thead>
+         @foreach($orderDetail as $key=>$item)
           <tr class="trbody">
-            
-            <td contenteditable="true" class="barang_id" style="display: none;">
-             {!! Form::text('row[0][id]', null, ['class' => 'form-control id ','id'=>'id']) !!}
-            {!! Form::text('row[0][barang_id]', null, ['class' => 'form-control barang_id search_text ','id'=>'barang_id']) !!}</td>
-             <td contenteditable="true" class="nama_barang" >{!! Form::text('row[0][nama_barang]', null, ['class' => 'form-control search_text ','id'=>'nama_barang','readonly']) !!}</td>
-            <td contenteditable="true" class="code_barang">
-               {!! Form::text('row[0][code_barang]',null,['class'=>'form-control search_text ','id'=>'code_barang','readonly']) !!}
-            </td>
-            
-            <td contenteditable="true" class="qty">
-              {!! Form::text('row[0][qty]',null,['class'=>'form-control qty','id'=>'qty','readonly'])!!}
-            </td>
-            <td contenteditable="true" class="harga">
-              {!! Form::text('row[0][harga]',null,['class'=>'form-control harga  ','id'=>'harga','readonly'])!!}
-             </td>
-            <td contenteditable="true" class="subtotal">
-                  {!! Form::text('row[0][subtotal]',null,['class'=>'form-control subtotal ','id'=>'subtotal','readonly'])!!}
-                 </td>
-            <td>
-              <button type='button' id="testbtn" name='test' class='btn btn-danger btn-xs test' style="display:none;">
-                <i class='fa fa-trash'></i></button>
-            </td>
+           <td>{!! Form::text('jumlah_barang',$item->nama_barang, ['class' => 'form-control jumlah','id'=>'jumlah','readonly'] ) !!}  </td>
+           <td>{!! Form::text('jumlah_barang',$item->code_barang, ['class' => 'form-control jumlah','id'=>'jumlah','readonly'] ) !!}  </td>
+           <td>{!! Form::text('jumlah_barang',$item->qty, ['class' => 'form-control jumlah','id'=>'jumlah','readonly'] ) !!}  </td>
+           <td>{!! Form::text('jumlah_barang',$item->harga, ['class' => 'form-control jumlah','id'=>'jumlah','readonly'] ) !!}  </td>
+           <td>{!! Form::text('jumlah_barang',$item->subtotal, ['class' => 'form-control jumlah','id'=>'jumlah','readonly'] ) !!}  </td>
           </tr>
-
+          @endforeach
 
 
     </table>
@@ -77,22 +61,28 @@
     
 </div>
 
+<!-- Status Field -->
+<div class="form-group col-sm-6">
+    {!! Form::label('tipe_pembayaran', 'Tipe Pembayaran:') !!}
+    {!! Form::select('tipe_pembayaran', [ 'tunai' => 'tunai','debet' => 'debet'], null, ['class' => 'form-control']) !!}
+</div>
+
 <!-- Bayar Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('bayar', 'Bayar:') !!}
-    {!! Form::text('bayar', null, ['class' => 'form-control']) !!}
+    {!! Form::text('bayar', null, ['class' => 'form-control','id'=>'num1']) !!}
 </div>
 
 <!-- Kembalian Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('kembalian', 'Kembalian:') !!}
-    {!! Form::text('kembalian', null, ['class' => 'form-control']) !!}
+    {!! Form::text('kembalian', null, ['class' => 'form-control','id'=>'kembalian','readonly']) !!}
 </div>
 
 <!-- Total Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('total', 'Total:') !!}
-    {!! Form::text('total', null, ['class' => 'form-control']) !!}
+    {!! Form::text('total', $order->total, ['class' => 'form-control','id'=>'num2','readonly']) !!}
 </div>
 
 <!-- Submit Field -->
@@ -100,3 +90,29 @@
     {!! Form::submit('Save', ['class' => 'btn btn-primary']) !!}
     <a href="{!! route('pembayarans.index') !!}" class="btn btn-default">Cancel</a>
 </div>
+
+
+@section('scripts')
+<script>
+   $(document).ready(function() {
+    //this calculates values automatically 
+    sum();
+    $("#num1, #num2").on("keydown keyup", function() {
+        sum();
+    });
+});
+
+   function sum() {
+            var num1 = document.getElementById('num1').value;
+            var num2 = document.getElementById('num2').value;
+            var result = parseInt(num1) - parseInt(num2);
+            // var result1 = parseInt(num2) - parseInt(num1);
+            if (!isNaN(result)) {
+                document.getElementById('kembalian').value = result;
+                // document.getElementById('subt').value = result1;
+            }
+        }
+
+</script>
+
+@stop

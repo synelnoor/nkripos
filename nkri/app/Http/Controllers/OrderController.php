@@ -286,7 +286,7 @@ class OrderController extends AppBaseController
             $xbulan='X';
         }elseif ($bulan==11) {
             $xbulan='XI';
-        }elseif ($bulan==2) {
+        }elseif ($bulan==12) {
             $xbulan='XII';
         }
         $temp ='000';
@@ -299,10 +299,10 @@ class OrderController extends AppBaseController
             $temp='';
         }
 
+       // dd($xbulan);
+           $num =$count+1;
        
-        
-       
-        $nomor= $temp.$count.'/'.$ks.'/'.$xbulan.'/'.$tahun;
+        $nomor= $temp.$num.'/'.$ks.'/'.$xbulan.'/'.$tahun;
         return $nomor;
     }
 

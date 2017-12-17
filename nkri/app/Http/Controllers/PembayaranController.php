@@ -68,9 +68,14 @@ class PembayaranController extends AppBaseController
      */
     public function store(CreatePembayaranRequest $request)
     {
+         $order = $this->orderRepository->findWhere(['id' => $request->order_id])->first();
         $input = $request->all();
 
-        $pembayaran = $this->pembayaranRepository->create($input);
+
+        //dd($order);
+        //$pembayaran = $this->pembayaranRepository->create($input);
+        $status=array('status' =>'cash');
+        $order = $this->orderRepository->update($status,$order['id']);
 
         Flash::success('Pembayaran saved successfully.');
 
