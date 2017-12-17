@@ -3,10 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\DataTables\PembayaranDataTable;
+use Illuminate\Http\Request;
+
 use App\Http\Requests;
 use App\Http\Requests\CreatePembayaranRequest;
 use App\Http\Requests\UpdatePembayaranRequest;
 use App\Repositories\PembayaranRepository;
+use App\Repositories\OrderRepository;
+use App\Repositories\OrderItemRepository;
+use App\Models\Barang;
+use App\Models\Order;
+use App\Models\OrderItem;
 use Flash;
 use App\Http\Controllers\AppBaseController;
 use Response;
@@ -15,10 +22,14 @@ class PembayaranController extends AppBaseController
 {
     /** @var  PembayaranRepository */
     private $pembayaranRepository;
+    private $orderRepository;
+    private $orderItemRepository;
 
-    public function __construct(PembayaranRepository $pembayaranRepo)
+    public function __construct(PembayaranRepository $pembayaranRepo,OrderRepository $orderRepo,OrderItemRepository $orderItemRepo)
     {
         $this->pembayaranRepository = $pembayaranRepo;
+        $this->orderRepository = $orderRepo;
+        $this->orderItemRepository = $orderItemRepo;
     }
 
     /**
@@ -37,9 +48,15 @@ class PembayaranController extends AppBaseController
      *
      * @return Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        return view('admin.pembayarans.create');
+             $order = $this->orderRepository->findWhere(['id' => $request->id])->first();
+             $orderDetail= $this->orderItemRepository->findWhere(['order_id' =>  $request->id]);
+         //dd($orderDetail);
+        return view('admin.pembayarans.create')
+                    ->with('order',$order)
+                    ->with('orderDetail',$orderDetail)
+                    ;
     }
 
     /**

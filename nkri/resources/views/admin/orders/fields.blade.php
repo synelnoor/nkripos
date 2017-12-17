@@ -43,17 +43,17 @@
             {!! Form::text('row[0][barang_id]', null, ['class' => 'form-control barang_id search_text ','id'=>'barang_id']) !!}</td>
              <td contenteditable="true" class="nama_barang" >{!! Form::text('row[0][nama_barang]', null, ['class' => 'form-control search_text ','id'=>'nama_barang']) !!}</td>
             <td contenteditable="true" class="code_barang">
-               {!! Form::text('row[0][code_barang]',null,['class'=>'form-control search_text ','id'=>'code_barang']) !!}
+               {!! Form::text('row[0][code_barang]',null,['class'=>'form-control search_text ','id'=>'code_barang','readonly']) !!}
             </td>
             
             <td contenteditable="true" class="qty">
               {!! Form::text('row[0][qty]',null,['class'=>'form-control qty','id'=>'qty'])!!}
             </td>
             <td contenteditable="true" class="harga">
-              {!! Form::text('row[0][harga]',null,['class'=>'form-control harga  ','id'=>'harga'])!!}
+              {!! Form::text('row[0][harga]',null,['class'=>'form-control harga  ','id'=>'harga','readonly'])!!}
              </td>
             <td contenteditable="true" class="subtotal">
-                  {!! Form::text('row[0][subtotal]',null,['class'=>'form-control subtotal ','id'=>'subtotal'])!!}
+                  {!! Form::text('row[0][subtotal]',null,['class'=>'form-control subtotal ','id'=>'subtotal','readonly'])!!}
                  </td>
             <td>
               <button type='button' id="testbtn" name='test' class='btn btn-danger btn-xs test' style="display:none;">
@@ -92,7 +92,7 @@
 </div>
 
   <div class="form-group col-sm-12">
-      <input type="hidden" id="action" value = "{!!$action!!}" />
+      <input type="hidden" id="action" value = "{!!@$action!!}" />
       <input type="hidden" id="countdetail" value = "0" />
       {!! Form::hidden('delete_row',null, ['class' => 'form-control','id'=>'delete_row'] ) !!}
       {!! Form::submit('Save', ['class' => 'btn btn-primary']) !!}

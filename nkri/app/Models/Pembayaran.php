@@ -56,5 +56,9 @@ class Pembayaran extends Model
         'bayar' => 'required'
     ];
 
+     public function order() {
+        return $this->hasMany('App\Models\Order');
+    }
+
     
 }

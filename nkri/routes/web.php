@@ -44,3 +44,4 @@ Route::resource('orderItems', 'OrderItemController');
 
 
 Route::resource('pembayarans', 'PembayaranController');
+Route::get('pembayarans/create/{id}', 'PembayaranController@create');
