@@ -3,6 +3,7 @@
 namespace App\DataTables;
 
 use App\Models\Pembayaran;
+use App\Models\Order;
 use Form;
 use Yajra\Datatables\Services\DataTable;
 
@@ -16,7 +17,8 @@ class PembayaranDataTable extends DataTable
     {
         return $this->datatables
             ->eloquent($this->query())
-            ->addColumn('action', 'pembayarans.datatables_actions')
+            ->addColumn('action', 'admin.pembayarans.datatables_actions')
+            ->editColumn('tanggal', '{{ date(\'d/m/Y\', strtotime($tanggal)) }}')
             ->make(true);
     }
 
@@ -27,7 +29,7 @@ class PembayaranDataTable extends DataTable
      */
     public function query()
     {
-        $pembayarans = Pembayaran::query();
+        $pembayarans = Order::query()->where('status','pending');
 
         return $this->applyScopes($pembayarans);
     }
@@ -72,11 +74,18 @@ class PembayaranDataTable extends DataTable
     private function getColumns()
     {
         return [
-            'order_id' => ['name' => 'order_id', 'data' => 'order_id'],
-            'tanggal' => ['name' => 'tanggal', 'data' => 'tanggal'],
-            'bayar' => ['name' => 'bayar', 'data' => 'bayar'],
-            'kembalian' => ['name' => 'kembalian', 'data' => 'kembalian'],
-            'total' => ['name' => 'total', 'data' => 'total']
+            // 'order_id' => ['name' => 'order_id', 'data' => 'order_id'],
+            // 'tanggal' => ['name' => 'tanggal', 'data' => 'tanggal'],
+            // 'bayar' => ['name' => 'bayar', 'data' => 'bayar'],
+            // 'kembalian' => ['name' => 'kembalian', 'data' => 'kembalian'],
+            // 'total' => ['name' => 'total', 'data' => 'total']
+
+        'nama_customer' => ['name' => 'nama_customer', 'data' => 'nama_customer'],
+            'code_order' => ['name' => 'code_order', 'data' => 'code_order'],
+            'jumlah_barang' => ['name' => 'jumlah_barang', 'data' => 'jumlah_barang'],
+            'total' => ['name' => 'total', 'data' => 'total'],
+            'status' => ['name' => 'status', 'data' => 'status'],
+            'tanggal' => ['name' => 'tanggal', 'data' => 'tanggal']
         ];
     }
 

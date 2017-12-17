@@ -17,7 +17,7 @@ class CreateBarangsTable extends Migration
             $table->increments('id');
             $table->string('nama_barang', 225);
             $table->decimal('harga_beli', 11, 2);
-            $table->decimal('harga-jual', 11, 2);
+            $table->decimal('harga_jual', 11, 2);
             $table->string('code_barang');
             $table->timestamps();
             $table->softDeletes();

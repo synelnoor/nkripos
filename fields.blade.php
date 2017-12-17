@@ -1,71 +1,76 @@
-<!-- Nama Customer Field -->
+
+<!-- In Code Field -->
 <div class="form-group col-sm-6">
-    {!! Form::label('nama_customer', 'Nama Customer:') !!}
-    {!! Form::text('nama_customer', null, ['class' => 'form-control']) !!}
+    {!! Form::label('in_code', 'Nomor Surat:') !!}
+    {!! Form::text('in_code',null, ['class' => 'form-control'] ) !!}
 </div>
 
-<!-- Code Order Field -->
+<!-- In Date Field -->
 <div class="form-group col-sm-6">
-    {!! Form::label('code_order', 'Code Order:') !!}
-    {!! Form::text('code_order', $code, ['class' => 'form-control','readonly']) !!}
+    {!! Form::label('in_date', 'Tanggal:') !!}
+    {!! Form::date('in_date',@$itemin->in_date, ['class' => 'form-control']) !!}
 </div>
 
-
-<!-- Status Field -->
+<!-- Source Id Field -->
 <div class="form-group col-sm-6">
-    {!! Form::label('status', 'Status:') !!}
-    {!! Form::select('status', ['cash' => 'cash', 'pending' => 'pending'], null, ['class' => 'form-control']) !!}
+    {!! Form::label('source_id', 'Sumber Penerimaan:') !!}
+    {!! Form::select('source_id', $source->pluck('source_name','id'),null, ['class' => 'form-control select2 ']) !!}
 </div>
-
-<!-- Tanggal Field -->
-<div class="form-group col-sm-6">
-    {!! Form::label('tanggal', 'Tanggal:') !!}
-    {!! Form::date('tanggal', $order->tanggal, ['class' => 'form-control']) !!}
-</div>
-
 
 <div class="form-group col-sm-12" style="overflow:hidden;">
     <div class="box-body table-responsive no-padding"  >
       <table class="table table-bordered" id="crud_table" border="3">
             <thead>
                
-                <th>Nama Barang</th>
-                <th>Kode Barang</th>
-                <th>Qty</th>
+               <th>Nama Barang</th>
+                <th>Satuan</th>
+                <th>Kode Produksi</th>
+                <th>Expired Date</th>
+                <th>Jumlah</th>
                 <th>Harga Satuan</th>
-                <th>total</th>
+                <th>Total</th>
                 <th>Aksi</th>
             </thead>
+           
           <tr class="trbody">
-            
-            <td contenteditable="true" class="barang_id" style="display: none;">{!! Form::text('row[0][barang_id]', null, ['class' => 'form-control barang_id search_text ','id'=>'barang_id']) !!}</td>
-             <td contenteditable="true" class="nama_barang" >{!! Form::text('row[0][nama_barang]', null, ['class' => 'form-control search_text ','id'=>'nama_barang']) !!}</td>
-            <td contenteditable="true" class="code_barang">
-               {!! Form::text('row[0][code_barang]',null,['class'=>'form-control search_text ','id'=>'code_barang']) !!}
+           <td contenteditable="true" class="item_name" style="display: none;">
+               {!! Form::text('row[0][id]', null, ['class' => 'form-control id ','id'=>'id']) !!}
+               {!! Form::text('row[0][id]', null, ['class' => 'form-control in_id ','id'=>'in_id']) !!}
+                {!! Form::text('row[0][item_id]', null, ['class' => 'form-control item_id search_text ','id'=>'item_id']) !!}
             </td>
-            
-            <td contenteditable="true" class="qty">
-              {!! Form::text('row[0][qty]',null,['class'=>'form-control qty','id'=>'qty'])!!}
-            </td>
-            <td contenteditable="true" class="harga">
-              {!! Form::text('row[0][harga]',null,['class'=>'form-control harga  ','id'=>'harga'])!!}
-             </td>
-            <td contenteditable="true" class="subtotal">
-                  {!! Form::text('row[0][subtotal]',null,['class'=>'form-control subtotal ','id'=>'subtotal'])!!}
+                <td contenteditable="true" class="item_name">
+                {!! Form::text('row[0][item_name]',null, ['class' => 'form-control search_text ','id'=>'item_name']) !!}
+                </td>
+                <td contenteditable="true" class="unit_name">
+                   {!! Form::text('row[0][unit_name]',null,['class'=>'form-control','id'=>'id_unit']) !!}
+                </td>
+                <td contenteditable="true" class="batch_no">
+                  {!! Form::text('row[0][batch_no]',null, ['class' => 'form-control', 'id'=>'batch_no']) !!}
+                </td>
+                <td contenteditable="true" class="expired_date" >{!! Form::date('row[0][expired_date]',null, ['class' => 'form-control', 'id'=>'expired_date']) !!}
+                </td>
+               
+                <td contenteditable="true" class="qty">
+                  {!! Form::text('row[0][qty]',null,['class'=>'form-control qty','id'=>'qty'])!!}
+                </td>
+                <td contenteditable="true" class="unit_price">
+                  {!! Form::text('row[0][unit_price]',null,['class'=>'form-control unit_price ','id'=>'unit_price'])!!}
                  </td>
-            <td><button type='button' id="testbtn" name='test' class='btn btn-danger btn-xs test' style="display:none;">-</button></td></td>
-
-          </tr>
-
+                 <td contenteditable="true" class="row_total">
+                  {!! Form::text('row[0][row_total]',null,['class'=>'form-control row_total ','id'=>'row_total'])!!}
+                 </td>
+                <td><button type='button' id="testbtn" name='test' class='btn btn-danger btn-xs test' style="display:none;">
+                <i class='fa fa-trash'></i></button>
+                </td>
+          
     </table>
      <div>
-     <button type="button" name="add" id="add" class="btn btn-success btn-xs">+</button>
+     <button type="button" name="add" id="add" class="btn btn-success btn-xs">+ Barang</button>
     </div>
+   
 
     </div>
-    <br />
-    
-      
+  
     </div>
 </div>
 
@@ -73,41 +78,53 @@
   
 <!-- Jumlah barang  -->
 <div class="form-group col-sm-6 ">
-    {!! Form::label('jumlah_barang', 'Jumlah Barang:') !!}
-    {!! Form::text('jumlah_barang',null, ['class' => 'form-control jumlah','id'=>'jumlah','readonly'] ) !!}  
+    {!! Form::label('total_qty', 'Jumlah Barang:') !!}
+    {!! Form::text('total_qty',null, ['class' => 'form-control jumlah','id'=>'jumlah','readonly'] ) !!}  
 </div>
 
 
 <!-- TOTAL Harga -->
 <div class="form-group col-sm-6 ">
-    {!! Form::label('total', 'Total Harga:') !!}
-    {!! Form::text('total',null, ['class' => 'form-control total','id'=>'total','readonly'] ) !!}
+    {!! Form::label('subtotal', 'Total Harga:') !!}
+    {!! Form::text('subtotal',null, ['class' => 'form-control total','id'=>'total','readonly'] ) !!}
+</div>
+
+
+<!-- PPN -->
+<div class="form-group col-sm-6" >
+    {!! Form::hidden('ppn', 'PPN :') !!}
+    {!! Form::hidden('ppn',null, ['class' => 'form-control ppn','id'=>'ppn','readonly'] ) !!}
+</div>
+
+
+<!-- total -->
+<div class="form-group col-sm-6 ">
+    {!! Form::hidden('total', 'Total :') !!}
+    {!! Form::hidden('total',null, ['class' => 'form-control grandtotal','id'=>'total','readonly'] ) !!}
 </div>
 
 
 </div>
 
-  <div class="form-group col-sm-12">
-  <!--  -->
-     <input type="hidden" id="action" value = "{!!$action!!}" />
+
+
+
+<!-- Submit Field -->
+<div class="form-group col-sm-12">
+     <input type="hidden" id="action" value = "{!!@$action!!}" />
         <input type="hidden" id="countdetail" value = "0" />
         {!! Form::hidden('delete_row',null, ['class' => 'form-control','id'=>'delete_row'] ) !!}
-
-      {!! Form::submit('Save', ['class' => 'btn btn-primary']) !!}
-      <a href="{!! route('orders.index') !!}" class="btn btn-default">Cancel</a>
-  </div>
-
-
+    {!! Form::submit('Save', ['class' => 'btn btn-primary','id'=>'save']) !!}
+    <a href="{!! route('itemins.index') !!}" class="btn btn-default">Cancel</a>
 </div>
 
 
 <?php 
 
-$listoutcode = json_encode($outcode);
-$listinitems = json_encode($data);
+$listoutcode = json_encode(@$outcode);
+$listinitems = json_encode(@$data);
 ?>
-
-
+ 
 @section('scripts')
 
 <!-- autocomplete -->
@@ -116,7 +133,6 @@ $listinitems = json_encode($data);
     $(document).on('input', '.search_text', function() {
         // console.log("test")
         src = "{{ route('searchajax') }}";
-//console.log(this)
         $(this).autocomplete({
                 source: function(request, response) {
                     $.ajax({
@@ -125,34 +141,33 @@ $listinitems = json_encode($data);
                         data: {
                             term : request.term
                         },
-                        success: function(data) {
+                       success: function(data) {
                             response($.map(data,function(item){
                               return{
                                 value:item.value,
                                 id:item.id,
-                                harga_jual:item.harga_jual,
-                                code_barang:item.code_barang
-
+                                unit_id:item.unit_id,
+                                unit_name:item.unit_name
                               }
                             }));
-                          },
+                           
+                        },
                     });
                 },
                 minLength: 2,
                select: function(event,ui){
-                if(ui.item){
-                  $this=$(this);
-                //console.log($this.parents('.trbody').find('.form-control.barang_id'))
-                  $this.val(ui.item.value);
-                  $this.parents('.trbody').find('.code_barang > input').val(ui.item.code_barang);
-                  $this.parents('.trbody').find('.form-control.barang_id').val(ui.item.id);
-                  $this.parents('.trbody').find('.harga > input').val(ui.item.harga_jual);
-                  // $('.form-control.item_id').val(ui.item.id);
-                   // $this('.form-control.item_id').val(ui.item.id);
-                   //$this.parents('.trbody').find('.item_id > input').val(ui.item.id);
-                  return false;
-                  }
-                 }
+              if(ui.item){
+                $this=$(this);
+              // console.log()
+                $this.val(ui.item.value);
+                 $this.parents('.trbody').find('.unit_name > input').val(ui.item.unit_name);
+                $this.parents('.trbody').find('.form-control.item_id').val(ui.item.id);
+                // $('.form-control.item_id').val(ui.item.id);
+                // $this('.form-control.item_id').val(ui.item.id);
+                //$this.parents('.trbody').find('.item_id > input').val(ui.item.id);
+                return false;
+                }
+               }
               });
   
   });
@@ -162,6 +177,12 @@ $listinitems = json_encode($data);
  <!--add row new -->
   <script>
     $(document).ready(function(){
+
+      Number.prototype.format_angka = function(n, x, s, c) {
+                var re = '\\d(?=(\\d{' + (x || 3) + '})+' + (n > 0 ? '\\D' : '$') + ')',
+                    num = this.toFixed(Math.max(0, ~~n));
+                return (c ? num.replace('.', c) : num).replace(new RegExp(re, 'g'), '$&' + (s || ','));
+            };
     var action = document.getElementById("action");
             
      // var count = 0;
@@ -175,13 +196,13 @@ $listinitems = json_encode($data);
        html_code += "<td contenteditable='true' class='unit_name'><input type='text' name='row["+count+"][unit_name]' class='form-control'/></td>";
        
        html_code += "<td contenteditable='true' class='batch_no' ><input type='text' name='row["+count+"][batch_no]' class='form-control'/></td>";
-       html_code += "<td contenteditable='true' class='expired_date' ><input type='date' name='row["+count+"][expired_date]' class='form-control fa fa-calendar'/></td>";
+       html_code += "<td contenteditable='true' class='expired_date' ><input type='date' name='row["+count+"][expired_date]' class='form-control'/></td>";
        
        html_code += "<td contenteditable='true' class='qty' ><input type='text' name='row["+count+"][qty]' class='form-control qty' id='qty'/></td>";
        html_code += "<td contenteditable='true' class='unit_price' ><input type='text' name='row["+count+"][unit_price]' class='form-control unit_price' id='unit_price'/></td>";
 
-        html_code += "<td contenteditable='true' class='ptotal' ><input type='text' name='row["+count+"][ptotal]' class='form-control ptotal' id='ptotal'/></td>";
-       html_code += "<td><button type='button' name='remove' data-row='row"+count+"' class='btn btn-danger btn-xs remove'>-</button></td>";   
+        html_code += "<td contenteditable='true' class='row_total' ><input type='text' name='row["+count+"][row_total]' class='form-control row_total' id='row_total'/></td>";
+       html_code += "<td><button type='button' name='remove' data-row='row"+count+"' class='btn btn-danger btn-xs remove'><i class='fa fa-trash'></i></button></td>";   
        html_code += "</tr>";  
        $('#crud_table').append(html_code);
 
@@ -221,7 +242,7 @@ $listinitems = json_encode($data);
 // <!-- auto hitung -->
     $('#crud_table').on("keyup", "tr", reCalculate);
 
-        var action = '<?php echo $action; ?>';
+        var action = '<?php echo @$action; ?>';
             if (action == 'edit')
             {
                 
@@ -231,6 +252,10 @@ $listinitems = json_encode($data);
       function reCalculate() {
           var grandTotal = 0;
           var jumlah=0;
+          var total=0;
+          var ppn = 0;
+          var ppnperc = 0.1;
+          var totalppn = 0;
         $(this).closest('#crud_table').find('tr.trbody').each(function() {
               var row =$(this);
               var value = row.find(".form-control.qty").val();
@@ -243,10 +268,14 @@ $listinitems = json_encode($data);
               jumlah += value;
               //console.log(jumlah);
               grandTotal += total;
-            $( ".form-control.ptotal",row ).val( 'Rp.' + total.toFixed(2) );
+              ppn= grandTotal * ppnperc;
+              totalppn = grandTotal +ppn;
+            $( ".form-control.row_total",row ).val( total.format_angka(0, 3, ',', ',') );
+             $(".total").val(grandTotal.format_angka(0, 3, ',', ','));
           });
           $(".jumlah").val(jumlah);
-          $(".total").val( 'Rp.' + grandTotal.toFixed(2));
+          $(".ppn").val(ppn.format_angka(0, 3, ',', ','));
+          $(".grandtotal").val(totalppn.format_angka(0, 3, ',', ','));
       }
 
 
@@ -261,13 +290,13 @@ $listinitems = json_encode($data);
        html_code += "<td contenteditable='true' class='unit_name'><input type='text' name='row["+count+"][unit_name]' class='form-control'/></td>";
        
        html_code += "<td contenteditable='true' class='batch_no' ><input type='text' name='row["+count+"][batch_no]' class='form-control'/></td>";
-       html_code += "<td contenteditable='true' class='expired_date' ><input type='date' name='row["+count+"][expired_date]' class='form-control fa fa-calendar'/></td>";
+       html_code += "<td contenteditable='true' class='expired_date' ><input type='date' name='row["+count+"][expired_date]' class='form-control'/></td>";
        
        html_code += "<td contenteditable='true' class='qty' ><input type='text' name='row["+count+"][qty]' class='form-control qty' id='qty'/></td>";
        html_code += "<td contenteditable='true' class='unit_price' ><input type='text' name='row["+count+"][unit_price]' class='form-control unit_price' id='unit_price'/></td>";
 
-        html_code += "<td contenteditable='true' class='ptotal' ><input type='text' name='row["+count+"][ptotal]' class='form-control ptotal' id='ptotal'/></td>";
-       html_code += "<td><button type='button' name='remove' data-row='row"+count+"' class='btn btn-danger btn-xs remove'>-</button></td>";   
+        html_code += "<td contenteditable='true' class='row_total' ><input type='text' name='row["+count+"][row_total]' class='form-control row_total' id='row_total'/></td>";
+       html_code += "<td><button type='button' name='remove' data-row='row"+count+"' class='btn btn-danger btn-xs remove'><i class='fa fa-trash'></i></button></td>";   
        html_code += "</tr>";  
        $('#crud_table').append(html_code);
      }
@@ -309,5 +338,4 @@ $listinitems = json_encode($data);
 
  
 
-  
 @stop

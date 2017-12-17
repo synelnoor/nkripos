@@ -17,6 +17,7 @@ class OrderDataTable extends DataTable
         return $this->datatables
             ->eloquent($this->query())
             ->addColumn('action', 'admin.orders.datatables_actions')
+            ->editColumn('tanggal', '{{ date(\'d/m/Y\', strtotime($tanggal)) }}')
             ->make(true);
     }
 

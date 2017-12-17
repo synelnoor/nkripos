@@ -26,7 +26,8 @@ class OrderItemRepository extends BaseRepository
         'nama_barang',
         'qty',
         'harga',
-        'jumlah'
+        'jumlah',
+        'subtotal'
     ];
 
     /**

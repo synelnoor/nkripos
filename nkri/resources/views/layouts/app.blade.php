@@ -151,9 +151,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/iCheck/1.0.2/icheck.min.js"></script>
 
     <!-- AdminLTE App -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.3.11/js/app.min.js"></script>
+   <!--  <script src="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.3.11/js/app.min.js"></script> -->
 <!--     <script src="https://unpkg.com/vue"></script>
- -->    <script src="{{asset('js/ItemOder.js')}}"></script>
+ -->   
     <!-- <script src="{{asset('js/autoComplete.js')}}"></script>
 
  -->

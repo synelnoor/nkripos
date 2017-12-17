@@ -22,6 +22,7 @@ class PembayaranRepository extends BaseRepository
     protected $fieldSearchable = [
         'order_id',
         'tanggal',
+        'tipe_pembayaran',
         'bayar',
         'kembalian',
         'total'

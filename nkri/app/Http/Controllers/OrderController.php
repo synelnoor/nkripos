@@ -69,7 +69,7 @@ class OrderController extends AppBaseController
     public function store(CreateOrderRequest $request)
     {
         $input = $request->all();
-//dd($input);
+// dd($input);
         $order = $this->orderRepository->create($input);
         //$barang= Barang::where('id',$request->id);
 //dd($order->id);
@@ -80,7 +80,8 @@ class OrderController extends AppBaseController
                 'code_barang'=>$item['code_barang'],
                 'nama_barang'=>$item['nama_barang'],
                 'qty' =>$item['qty'],
-                'harga' =>$item['harga']
+                'harga' =>$item['harga'],
+                'subtotal' => $item['subtotal']
                
             );
 
@@ -124,7 +125,7 @@ class OrderController extends AppBaseController
     {
         $order = $this->orderRepository->findWithoutFail($id);
         $orderDetail= $this->orderItemRepository->findWhere(['order_id' => $id]);
-        //dd($orderDetail);
+       // dd($orderDetail);
 
         if (empty($order)) {
             Flash::error('Order not found');
@@ -133,8 +134,10 @@ class OrderController extends AppBaseController
         }
         $code=$this->code();
         $auto=$this->autoComplete($request);
+        $outcode= $this->itemout_code();
+        $action="edit";
 
-        $data[]=array();
+        $data=array();
         foreach ($orderDetail as $item) {
             //dd($item);
             $data[]=array(
@@ -144,13 +147,16 @@ class OrderController extends AppBaseController
                         'code_barang'=>$item['code_barang'],
                         'nama_barang'=>$item['nama_barang'],
                         'qty'=>$item['qty'],
-                        'harga'=>$item['harga']);
+                        'harga'=>$item['harga'],
+                        'subtotal'=>$item['subtotal']);
         }
 
-dd($data);
+//dd($data);
         return view('admin.orders.edit')->with('order', $order)
             ->with('code',$code)
-            ->with('data',$data);
+            ->with('outcode', $outcode)
+            ->with('data',$data)
+            ->with('action',$action);
     }
 
     /**
@@ -164,6 +170,7 @@ dd($data);
     public function update($id, UpdateOrderRequest $request)
     {
         $order = $this->orderRepository->findWithoutFail($id);
+        $orderDetail= $this->orderItemRepository->findWhere(['order_id' => $id]);
 
         if (empty($order)) {
             Flash::error('Order not found');
@@ -172,6 +179,39 @@ dd($data);
         }
 
         $order = $this->orderRepository->update($request->all(), $id);
+
+        $delId = $request['delete_row'];
+                  if ($delId!='')
+                  {
+                  $delIds = explode("|",$delId);
+                  foreach($delIds as $item)
+                      {
+                      
+                      $this->orderItemRepository->delete($item);
+                      }
+                  }
+
+        foreach($request['row'] as $item) {
+            $dataOrderItem = array(
+                'order_id'=>$order->id,
+                'barang_id'=>$item['barang_id'],
+                'code_barang'=>$item['code_barang'],
+                'nama_barang'=>$item['nama_barang'],
+                'qty' =>$item['qty'],
+                'harga' =>$item['harga'],
+                'subtotal' => $item['subtotal']
+               
+            );
+                if($item['id']=='')
+                    {
+                    $this->orderItemRepository->create($dataOrderItem);
+                    } 
+                else
+                    {
+                    $this->orderItemRepository->update($dataOrderItem,$item['id']);
+                    // return redirect(route('itemins.index'));
+                    }
+        }
 
         Flash::success('Order updated successfully.');
 
@@ -282,4 +322,24 @@ dd($data);
                 else
                     return ['value'=>'No Result Found','id'=>''];
             }
+
+
+             public function itemout_code() {
+          $query = '';
+                
+          // $items= Itemout::where('deleted_at','null')->get();
+          $items= Order::whereNull('deleted_at')->get();
+
+          $data=array();
+          foreach ($items as $item) {
+                        $data[]=array('value'=>$item->out_code);
+          }
+
+                
+        
+          if(count($data))
+               return $data;
+          else
+              return ['value'=>'No Result Found'];
+    }
 }

@@ -29,6 +29,7 @@ class Pembayaran extends Model
     public $fillable = [
         'order_id',
         'tanggal',
+        'tipe_pemabayaran',
         'bayar',
         'kembalian',
         'total'

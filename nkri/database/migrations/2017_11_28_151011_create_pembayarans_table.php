@@ -17,6 +17,7 @@ class CreatePembayaransTable extends Migration
             $table->increments('id');
             $table->integer('order_id')->unsigned();
             $table->date('tanggal');
+            $table->enum('tipe_pembayaran', ['tunai','debet']);
             $table->decimal('bayar', 10, 2);
             $table->decimal('kembalian', 10, 2);
             $table->decimal('total', 10, 2);
