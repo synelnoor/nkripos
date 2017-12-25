@@ -55,6 +55,7 @@ class OrderController extends AppBaseController
         $auto=$this->autoComplete($request);
         $action="create";
         $now = Carbon::now();
+        //dd($now);
         //dd($auto);
         return view('admin.orders.create')
         ->with('now',$now)

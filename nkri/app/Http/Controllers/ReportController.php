@@ -29,8 +29,8 @@ class ReportController extends AppBaseController
      */
     public function index(ReportDataTable $reportDataTable)
     {
-        // return $reportDataTable->render('reports.index');
-        return view('reports.index');
+     return $reportDataTable->render('admin.reports.index');
+       // return view('admin.reports.index');
     }
     // public function index()
     // {

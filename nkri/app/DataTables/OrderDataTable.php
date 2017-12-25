@@ -5,6 +5,7 @@ namespace App\DataTables;
 use App\Models\Order;
 use Form;
 use Yajra\Datatables\Services\DataTable;
+use Carbon\Carbon;
 
 class OrderDataTable extends DataTable
 {
@@ -27,8 +28,10 @@ class OrderDataTable extends DataTable
      * @return \Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder
      */
     public function query()
-    {
-        $orders = Order::query();
+    {           
+        $now= Carbon::now();
+        $yest= Carbon::yesterday();
+        $orders = Order::whereBetween('tanggal', [$yest, $now]);
 
         return $this->applyScopes($orders);
     }

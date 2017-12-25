@@ -8,7 +8,7 @@
 <div class="form-group col-sm-6">
     {!! Form::label('code_order', 'Code Order:') !!}
     {!! Form::text('code_order', null, ['class' => 'form-control','readonly']) !!}
-    dd({{$action}});
+   <!--  dd({{$action}}); -->
 </div>
 @else
 <!-- Code Order Field -->
