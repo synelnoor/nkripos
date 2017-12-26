@@ -43,7 +43,9 @@ Route::resource('orders', 'OrderController');
 Route::get('barangJson','OrderController@barangAr');
 
 Route::resource('orderItems', 'OrderItemController');
-// Route::resource('report','ReportController');
+Route::resource('reports','ReportController');
+
+Route::get('hh','ReportController@index');
 
 
 

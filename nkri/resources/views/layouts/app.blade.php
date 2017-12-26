@@ -28,7 +28,7 @@
         <header class="main-header">
 
             <!-- Logo -->
-            <a href="#" class="logo">
+            <a href="{{URL('home')}}" class="logo">
                 <b>NKRI</b>
             </a>
 
