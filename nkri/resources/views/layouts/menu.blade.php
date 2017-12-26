@@ -5,12 +5,13 @@
 
 
 <li class="{{ Request::is('orders*') ? 'active' : '' }}">
-    <a href="{!! route('orders.index') !!}"><i class="fa fa-edit"></i><span>Orders</span></a>
+    <a href="{!! route('orders.index') !!}"><i class="fa fa-edit"></i><span>Pemesanan</span></a>
 </li>
 
 <li class="{{ Request::is('pembayarans*') ? 'active' : '' }}">
-    <a href="{!! route('pembayarans.index') !!}"><i class="fa fa-edit"></i><span>Pembayarans</span></a>
+    <a href="{!! route('pembayarans.index') !!}"><i class="fa fa-edit"></i><span>Pembayaran</span></a>
 </li>
+<!--  -->
 
 
 <!-- 

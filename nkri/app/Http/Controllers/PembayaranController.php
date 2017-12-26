@@ -17,6 +17,9 @@ use App\Models\OrderItem;
 use Flash;
 use App\Http\Controllers\AppBaseController;
 use Response;
+ use Mike42\Escpos\Printer; 
+ use Mike42\Escpos\PrintConnectors\WindowsPrintConnector;
+ use Carbon\Carbon;
 
 class PembayaranController extends AppBaseController
 {
@@ -52,8 +55,13 @@ class PembayaranController extends AppBaseController
     {
              $order = $this->orderRepository->findWhere(['id' => $request->id])->first();
              $orderDetail= $this->orderItemRepository->findWhere(['order_id' =>  $request->id]);
+
+             $now=carbon::now();
+             //dd($now);
+             //dd($order);
          //dd($orderDetail);
         return view('admin.pembayarans.create')
+                    ->with('now',$now)
                     ->with('order',$order)
                     ->with('orderDetail',$orderDetail)
                     ;
@@ -170,4 +178,26 @@ class PembayaranController extends AppBaseController
 
         return redirect(route('pembayarans.index'));
     }
+
+ //    public function print(Request $request){
+ //       // dd($request);
+ //     if($request->ajax()){
+ //         try {
+ //             $ip = '192.168.100.40'; // IP Komputer kita atau printer lain yang masih satu jaringan
+ //             $printer = 'escprinter'; // Nama Printer yang di sharing smb:/'192.168.100.40'/
+ //                 $connector = new WindowsPrintConnector("smb://" . $ip . "/" . $printer);
+ //                 $printer = new Printer($connector);
+ //                 $printer -> text("code_order :" . $request->code_order . "\n");
+ //                 $printer -> text("Total:" . $request->total . "\n");
+ //                 $printer -> cut();
+ //                 $printer -> close();
+ //                 $response = ['success'=>'true'];
+ //         } catch (Exception $e) {
+ //                 $response = ['success'=>'false'];
+ //         }
+ //         return response()
+ //             ->json($response);
+ //     }
+ //     return;
+ // }
 }

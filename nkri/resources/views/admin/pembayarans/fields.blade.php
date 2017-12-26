@@ -9,8 +9,15 @@
 <!-- Tanggal Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('tanggal', 'Tanggal:') !!}
-    {!! Form::date('tanggal', null, ['class' => 'form-control']) !!}
+    {!! Form::date('tanggal', $now, ['class' => 'form-control']) !!}
 </div>
+
+<!-- Tanggal Field -->
+<div class="form-group col-sm-6">
+    {!! Form::label('nama_customer', 'Nama Customer:') !!}
+    {!! Form::text('nama_customer', $order->nama_customer, ['class' => 'form-control']) !!}
+</div>
+
 
 <!-- OrderDetai -->
 <div class="form-group col-sm-12">
@@ -27,11 +34,11 @@
             </thead>
          @foreach($orderDetail as $key=>$item)
           <tr class="trbody">
-           <td>{!! Form::text('jumlah_barang',$item->nama_barang, ['class' => 'form-control jumlah','id'=>'jumlah','readonly'] ) !!}  </td>
-           <td>{!! Form::text('jumlah_barang',$item->code_barang, ['class' => 'form-control jumlah','id'=>'jumlah','readonly'] ) !!}  </td>
-           <td>{!! Form::text('jumlah_barang',$item->qty, ['class' => 'form-control jumlah','id'=>'jumlah','readonly'] ) !!}  </td>
-           <td>{!! Form::text('jumlah_barang',$item->harga, ['class' => 'form-control jumlah','id'=>'jumlah','readonly'] ) !!}  </td>
-           <td>{!! Form::text('jumlah_barang',$item->subtotal, ['class' => 'form-control jumlah','id'=>'jumlah','readonly'] ) !!}  </td>
+           <td>{!! Form::text('nama_barang',$item->nama_barang, ['class' => 'form-control jumlah','id'=>'jumlah','readonly'] ) !!}  </td>
+           <td>{!! Form::text('code_barang',$item->code_barang, ['class' => 'form-control jumlah','id'=>'jumlah','readonly'] ) !!}  </td>
+           <td>{!! Form::text('qty',$item->qty, ['class' => 'form-control jumlah','id'=>'jumlah','readonly'] ) !!}  </td>
+           <td>{!! Form::text('harga',$item->harga, ['class' => 'form-control jumlah','id'=>'jumlah','readonly'] ) !!}  </td>
+           <td>{!! Form::text('subtotal',$item->subtotal, ['class' => 'form-control jumlah','id'=>'jumlah','readonly'] ) !!}  </td>
           </tr>
           @endforeach
 
@@ -88,8 +95,15 @@
 <!-- Submit Field -->
 <div class="form-group col-sm-12">
     {!! Form::submit('Save', ['class' => 'btn btn-primary']) !!}
+
+
     <a href="{!! route('pembayarans.index') !!}" class="btn btn-default">Cancel</a>
 </div>
+
+<?php 
+
+$listOrder = json_encode(@$orderDetail);
+?>
 
 
 @section('scripts')
@@ -113,6 +127,42 @@
             }
         }
 
+</script>
+<script>
+$('Form').submit(function(e){
+        //e.preventDefault();
+        var route = "{{ URL('print') }}";
+        var detail=<?php echo $listOrder ?>;
+         console.log(detail)
+
+        //var detData=
+        var formData = {
+
+           
+
+           
+                _token:"{{ csrf_token() }}",
+                code_order:$('[name="code_order"]').val(),
+                tanggal:$('[name="tanggal"]').val(),
+                nama_customer:$('[name="nama_customer"]').val(),
+                barang:detail,
+                // qty:$('[name="qty"]').val(),
+                // harga:$('[name="harga"]').val(),
+                // nama_barang:$('[name="nama_barang"]').val(),
+                kembalian:$('[name="kembalian"]').val(),
+                bayar:$('[name="bayar"]').val(),
+                total:$('[name="total"]').val(),
+        };
+        console.log(formData)
+        
+        $.post(route, formData, function(data){
+            console.log(data)
+            if(data.success == 'true')
+                alert('Cetak Data Berhasil...');
+            else
+                alert('Cetak Data GAGAL...');
+        });
+    });
 </script>
 
 @stop

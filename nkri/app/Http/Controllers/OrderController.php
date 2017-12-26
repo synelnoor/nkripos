@@ -17,7 +17,7 @@ use App\Models\Barang;
 use App\Models\Order;
 use App\Models\OrderItem;
 use Cart;
-
+use Carbon\Carbon;
 class OrderController extends AppBaseController
 {
     /** @var  OrderRepository */
@@ -53,10 +53,13 @@ class OrderController extends AppBaseController
         $code=$this->code();
         //dd($code);
         $auto=$this->autoComplete($request);
-
+        $action="create";
+        $now = Carbon::now();
         //dd($auto);
         return view('admin.orders.create')
-        ->with('code',$code);
+        ->with('now',$now)
+        ->with('code',$code)
+        ->with('action',$action);
     }
 
     /**

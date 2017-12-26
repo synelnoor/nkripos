@@ -3,25 +3,39 @@
     {!! Form::label('nama_customer', 'Nama Customer:') !!}
     {!! Form::text('nama_customer', null, ['class' => 'form-control']) !!}
 </div>
-
+<!-- dd({{$action}});
+ -->@if ($action=='edit')
+<div class="form-group col-sm-6">
+    {!! Form::label('code_order', 'Code Order:') !!}
+    {!! Form::text('code_order', null, ['class' => 'form-control','readonly']) !!}
+    dd({{$action}});
+</div>
+@else
 <!-- Code Order Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('code_order', 'Code Order:') !!}
     {!! Form::text('code_order', $code, ['class' => 'form-control','readonly']) !!}
 </div>
 
-
+@endif
 <!-- Status Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('status', 'Status:') !!}
     {!! Form::select('status', [ 'pending' => 'pending','cash' => 'cash'], null, ['class' => 'form-control']) !!}
 </div>
-
+@if ($action=='edit')
 <!-- Tanggal Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('tanggal', 'Tanggal:') !!}
-    {!! Form::date('tanggal', @$order->tanggal, ['class' => 'form-control']) !!}
+    {!! Form::date('tanggal', $order->tanggal, ['class' => 'form-control']) !!}
 </div>
+@else
+<!-- Tanggal Field -->
+<div class="form-group col-sm-6">
+    {!! Form::label('tanggal', 'Tanggal:') !!}
+    {!! Form::date('tanggal', $now, ['class' => 'form-control']) !!}
+</div>
+@endif
 
 
 <div class="form-group col-sm-12" style="overflow:hidden;">
