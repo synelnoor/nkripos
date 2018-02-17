@@ -15,3 +15,11 @@
     <a href="{!! route('pembayarans.index') !!}"><i class="fa fa-edit"></i><span>Pembayarans</span></a>
 </li>
 
+<li class="{{ Request::is('purchasings*') ? 'active' : '' }}">
+    <a href="{!! route('purchasings.index') !!}"><i class="fa fa-edit"></i><span>Purchasings</span></a>
+</li>
+
+<li class="{{ Request::is('purchases*') ? 'active' : '' }}">
+    <a href="{!! route('purchases.index') !!}"><i class="fa fa-edit"></i><span>Purchases</span></a>
+</li>
+

@@ -35,7 +35,6 @@ Route::get('/home', 'HomeController@index');
 Route::resource('barangs', 'BarangController');
 
 // Route::get('orders/autocomplete', 'OrderController@autocomplete');
-
 Route::get('autocomplete',array('as'=>'autocomplete','uses'=>'OrderController@create'));
 Route::get('searchajax',array('as'=>'searchajax','uses'=>'OrderController@autoComplete'));
 
@@ -45,8 +44,7 @@ Route::get('barangJson','OrderController@barangAr');
 Route::resource('orderItems', 'OrderItemController');
 Route::resource('reports','ReportController');
 
-Route::get('hh','ReportController@index');
-
+Route::post('cek','ReportController@lapHar');
 
 
 
@@ -106,3 +104,7 @@ Route::get('coba','TestController@index');
      }
      return;
  });
+
+Route::resource('purchasings', 'purchasingController');
+
+Route::resource('purchases', 'PurchaseController');

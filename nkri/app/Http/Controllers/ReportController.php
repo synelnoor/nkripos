@@ -4,12 +4,17 @@ namespace App\Http\Controllers;
 
 use App\DataTables\ReportDataTable;
 use App\Http\Requests;
+use Illuminate\Http\Request;
 use App\Http\Requests\CreateReportRequest;
 use App\Http\Requests\UpdateReportRequest;
 use App\Repositories\ReportRepository;
 use Flash;
 use App\Http\Controllers\AppBaseController;
 use Response;
+use App\Models\Order;
+use App\Models\OrderItem;
+use App\Models\Pembayaran;
+use Carbon\Carbon;
 
 class ReportController extends AppBaseController
 {
@@ -29,14 +34,12 @@ class ReportController extends AppBaseController
      */
     public function index(ReportDataTable $reportDataTable)
     {
-     return $reportDataTable->render('admin.reports.index');
-       // return view('admin.reports.index');
+        $data='';
+     return $reportDataTable->render('admin.reports.index')
+                ->with('data',$data);
+      
     }
-    // public function index()
-    // {
-    //     // return $reportDataTable->render('reports.index');
-    //     return view('reports.index');
-    // }
+   
 
     /**
      * Show the form for creating a new Report.
@@ -153,5 +156,50 @@ class ReportController extends AppBaseController
         Flash::success('Report deleted successfully.');
 
         return redirect(route('reports.index'));
+    }
+
+    public function lapHar(Request $request){
+        $input = $request->all();
+        $tgl= $request->tanggal;
+
+        //dd($tgl);
+        $lapHar = Order::where('tanggal','=',"$tgl")
+        ->where('status','=','cash')
+        ->get();
+        //dd($lapHar->toArray());
+            $data=array( );
+            $totHar=0;
+            $totBar=0;
+        foreach ($lapHar as $key => $value) {
+            $data[]=array( 
+
+                    'id' =>$value['id'],
+                    'nama_customer' =>$value['nama_customer'], 
+                    'code_order' =>$value['code_order'], 
+                    'jumlah_barang' =>$value['jumlah_barang'], 
+                    'total' =>$value['total'], 
+                    'status' =>$value['status'], 
+                    'tanggal' =>$value['tanggal']
+
+                );
+            $totBar += $value['jumlah_barang'];
+            $totHar += $value['total'];
+        }
+
+   //dd($totHar);
+
+        // return redirect(route('reports.index'))
+        return view('admin.reports.lapHar')
+                ->with('lapHar',$lapHar)
+                ->with('data',$data)
+                ->with('totBar',$totBar)
+                ->with('totHar',$totHar);
+
+
+    }
+
+    public function ExportExPJ(Request $request){
+        $inp=$request->all;
+
     }
 }

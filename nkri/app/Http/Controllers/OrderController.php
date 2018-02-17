@@ -73,10 +73,10 @@ class OrderController extends AppBaseController
     public function store(CreateOrderRequest $request)
     {
         $input = $request->all();
-// dd($input);
+ //dd($input);
         $order = $this->orderRepository->create($input);
-        //$barang= Barang::where('id',$request->id);
-//dd($order->id);
+        $barang= Barang::where('id',$request->id);
+        //dd($request['row']);
          foreach($request['row'] as $item) {
             $dataOrderItem = array(
                 'order_id'=>$order->id,
@@ -88,10 +88,10 @@ class OrderController extends AppBaseController
                 'subtotal' => $item['subtotal']
                
             );
-
-            $this->orderItemRepository->create($dataOrderItem);
+             $this->orderItemRepository->create($dataOrderItem);
+            
         }
-
+       
         Flash::success('Order saved successfully.');
 
         return redirect(route('orders.index'));

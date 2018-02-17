@@ -183,8 +183,10 @@ $listinitems = json_encode(@$data);
 
      $('#add').click(function(){
        var count = parseInt(document.getElementById("countdetail").value);
-         document.getElementById("countdetail").value = count;
-      count++;
+       console.log(count)
+       count++;   
+      document.getElementById("countdetail").value = count;
+
       var html_code = "<tr id='row"+count+"' class='trbody'>";
        html_code += "<td contenteditable='true' class='barang_id' style='display:none;'><input type='hidden' name='row["+count+"][id]' class='form-control id'/><input type='text' name='row["+count+"][barang_id]' class='form-control barang_id'/><input type='text' name='row["+count+"][order_id]' class='form-control order_id'/></td>";
        html_code += "<td contenteditable='true' class='nama_barang'><input type='text' name='row["+count+"][nama_barang]' class='form-control search_text'/> </td>";
@@ -197,6 +199,8 @@ $listinitems = json_encode(@$data);
        html_code += "</tr>";  
        $('#crud_table').append(html_code);
 
+       console.log(count)
+      
      });
      
       $(document).on('click', '.remove', function(){
