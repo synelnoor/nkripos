@@ -29,7 +29,7 @@ class PurchaseController extends AppBaseController
      */
     public function index(PurchaseDataTable $purchaseDataTable)
     {
-        return $purchaseDataTable->render('purchases.index');
+        return $purchaseDataTable->render('admin.purchases.index');
     }
 
     /**
@@ -39,7 +39,7 @@ class PurchaseController extends AppBaseController
      */
     public function create()
     {
-        return view('purchases.create');
+        return view('admin.purchases.create');
     }
 
     /**
@@ -77,7 +77,7 @@ class PurchaseController extends AppBaseController
             return redirect(route('purchases.index'));
         }
 
-        return view('purchases.show')->with('purchase', $purchase);
+        return view('admin.purchases.show')->with('purchase', $purchase);
     }
 
     /**
@@ -97,7 +97,7 @@ class PurchaseController extends AppBaseController
             return redirect(route('purchases.index'));
         }
 
-        return view('purchases.edit')->with('purchase', $purchase);
+        return view('admin.purchases.edit')->with('purchase', $purchase);
     }
 
     /**

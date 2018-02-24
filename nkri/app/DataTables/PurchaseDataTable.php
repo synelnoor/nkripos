@@ -16,7 +16,7 @@ class PurchaseDataTable extends DataTable
     {
         return $this->datatables
             ->eloquent($this->query())
-            ->addColumn('action', 'purchases.datatables_actions')
+            ->addColumn('action', 'admin.purchases.datatables_actions')
             ->make(true);
     }
 

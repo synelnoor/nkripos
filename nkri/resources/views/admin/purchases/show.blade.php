@@ -10,7 +10,7 @@
         <div class="box box-primary">
             <div class="box-body">
                 <div class="row" style="padding-left: 20px">
-                    @include('purchases.show_fields')
+                    @include('admin.purchases.show_fields')
                     <a href="{!! route('purchases.index') !!}" class="btn btn-default">Back</a>
                 </div>
             </div>

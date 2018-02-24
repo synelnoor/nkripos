@@ -18,8 +18,8 @@ class CreatePurchasesTable extends Migration
             $table->string('nama_supplier');
             $table->string('code_supplier');
             $table->integer('jumlah_barang');
-            $table->decimal(11('total', 2));
-            $table->enum(cash.pending)('status');
+            $table->decimal('total',11, 2);
+            $table->enum('status',['cash','pending']);
             $table->date('tanggal');
             $table->timestamps();
             $table->softDeletes();

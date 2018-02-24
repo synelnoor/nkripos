@@ -13,7 +13,7 @@
                <div class="row">
                    {!! Form::model($purchase, ['route' => ['purchases.update', $purchase->id], 'method' => 'patch']) !!}
 
-                        @include('purchases.fields')
+                        @include('admin.purchases.fields')
 
                    {!! Form::close() !!}
                </div>

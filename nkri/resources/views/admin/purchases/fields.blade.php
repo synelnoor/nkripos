@@ -25,7 +25,7 @@
 <!-- Status Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('status', 'Status:') !!}
-    {!! Form::select('status', ], null, ['class' => 'form-control']) !!}
+    {!! Form::select('cash',[ 'pending' => 'pending','cash' => 'cash'], null, ['class' => 'form-control']) !!}
 </div>
 
 <!-- Tanggal Field -->

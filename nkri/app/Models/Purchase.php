@@ -54,7 +54,7 @@ class Purchase extends Model
      * @var array
      */
     public static $rules = [
-        'jumlah_barang' => 'total decimal(11,2) text'
+        
     ];
 
     

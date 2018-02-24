@@ -11,6 +11,12 @@
 <li class="{{ Request::is('pembayarans*') ? 'active' : '' }}">
     <a href="{!! route('pembayarans.index') !!}"><i class="fa fa-edit"></i><span>Pembayaran</span></a>
 </li>
+
+<li class="{{ Request::is('purchases*') ? 'active' : '' }}">
+    <a href="{!! route('purchases.index') !!}"><i class="fa fa-edit"></i><span>Pengeluaran</span></a>
+</li>
+
+
 <li class="{{ Request::is('reports*') ? 'active' : '' }}">
     <a href="{!! route('reports.index') !!}"><i class="fa fa-edit"></i><span>Laporan</span></a>
 </li>
