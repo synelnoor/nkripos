@@ -76,6 +76,7 @@ class PurchaseDataTable extends DataTable
             'code_supplier' => ['name' => 'code_supplier', 'data' => 'code_supplier'],
             'jumlah_barang' => ['name' => 'jumlah_barang', 'data' => 'jumlah_barang'],
             'total' => ['name' => 'total', 'data' => 'total'],
+            'deskripsi' => ['name' => 'deskripsi', 'data' => 'deskripsi'],
             'status' => ['name' => 'status', 'data' => 'status'],
             'tanggal' => ['name' => 'tanggal', 'data' => 'tanggal']
         ];

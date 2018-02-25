@@ -32,6 +32,7 @@ class Purchase extends Model
         'code_supplier',
         'jumlah_barang',
         'total',
+        'deskripsi',
         'status',
         'tanggal'
     ];

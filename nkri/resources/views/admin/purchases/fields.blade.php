@@ -21,6 +21,11 @@
     {!! Form::label('total', 'Total:') !!}
     {!! Form::text('total', null, ['class' => 'form-control']) !!}
 </div>
+<!-- deskripsi -->
+<div class="form-group col-sm-6">
+    {!! Form::label('deskripsi','Deskripsi:') !!}
+    {!! Form::textarea('deskripsi',null,['class'=>'form-control']) !!}
+</div>
 
 <!-- Status Field -->
 <div class="form-group col-sm-6">

@@ -24,6 +24,7 @@ class PurchaseRepository extends BaseRepository
         'code_supplier',
         'jumlah_barang',
         'total',
+        'deskripsi',
         'status',
         'tanggal'
     ];
