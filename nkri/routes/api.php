@@ -23,3 +23,5 @@ Route::resource('pembayarans', 'PembayaranAPIController');
 Route::resource('purchasings', 'purchasingAPIController');
 
 Route::resource('purchases', 'PurchaseAPIController');
+
+Route::resource('ajas', 'ajaAPIController');

@@ -21,7 +21,7 @@
     @yield('css')
 </head>
 
-<body class="white-skin sidebar-mini">
+<body class="skin-black sidebar-mini">
 @if (!Auth::guest())
     <div class="wrapper">
         <!-- Main Header -->

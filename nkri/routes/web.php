@@ -108,3 +108,5 @@ Route::get('coba','TestController@index');
 Route::resource('purchasings', 'purchasingController');
 
 Route::resource('purchases', 'PurchaseController');
+
+Route::resource('ajas', 'ajaController');
