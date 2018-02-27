@@ -48,9 +48,9 @@
 
 		    <div class="footer-list">
 			    <ul>
-			    @foreach($data as $item)
+			   {{-- @foreach($data as $item)
 				    <li><a>{{ $item->judul}}</a></li>
-				@endforeach
+				@endforeach--}}
 			    </ul>
 		    </div>
 
