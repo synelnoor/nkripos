@@ -17,7 +17,7 @@
             <div class="box-body">
                         <div class="row">
                             <div class="form-group col-sm-12">
-                            <h1>Cek Laporan Harian</h1>
+                            <h1>Cek Laporan Harian Penjualan</h1>
                          {!! Form::open(['url' => 'cek']) !!}
                          <?php
                             $dt = \Carbon\Carbon::now();

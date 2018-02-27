@@ -16,6 +16,7 @@ use Response;
 use App\Models\Barang;
 use App\Models\Order;
 use App\Models\OrderItem;
+use DB;
 use Cart;
 use Carbon\Carbon;
 class OrderController extends AppBaseController
@@ -235,12 +236,15 @@ class OrderController extends AppBaseController
     {
         $order = $this->orderRepository->findWithoutFail($id);
 
+
         if (empty($order)) {
             Flash::error('Order not found');
 
             return redirect(route('orders.index'));
         }
 
+
+         DB::table('order_items')->where('order_id', '=', $id)->delete();
         $this->orderRepository->delete($id);
 
         Flash::success('Order deleted successfully.');

@@ -100,6 +100,8 @@ class PurchaseController extends AppBaseController
      */
     public function edit($id)
     {
+         $action="edit";
+
         $purchase = $this->purchaseRepository->findWithoutFail($id);
 
         if (empty($purchase)) {
@@ -108,7 +110,9 @@ class PurchaseController extends AppBaseController
             return redirect(route('purchases.index'));
         }
 
-        return view('admin.purchases.edit')->with('purchase', $purchase);
+        return view('admin.purchases.edit')
+            ->with('purchase', $purchase)
+            ->with('action',$action);
     }
 
     /**
