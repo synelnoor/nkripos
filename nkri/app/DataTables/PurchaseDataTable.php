@@ -5,6 +5,7 @@ namespace App\DataTables;
 use App\Models\Purchase;
 use Form;
 use Yajra\Datatables\Services\DataTable;
+use Carbon\Carbon;
 
 class PurchaseDataTable extends DataTable
 {
@@ -17,6 +18,7 @@ class PurchaseDataTable extends DataTable
         return $this->datatables
             ->eloquent($this->query())
             ->addColumn('action', 'admin.purchases.datatables_actions')
+             ->editColumn('tanggal', '{{ date(\'d/m/Y\', strtotime($tanggal)) }}')
             ->make(true);
     }
 
@@ -27,7 +29,9 @@ class PurchaseDataTable extends DataTable
      */
     public function query()
     {
-        $purchases = Purchase::query();
+        $dt=Carbon::now();
+        $Mont=$dt->month;
+        $purchases = Purchase::query()->whereMonth('tanggal',$Mont);
 
         return $this->applyScopes($purchases);
     }

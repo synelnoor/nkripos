@@ -264,7 +264,7 @@ class OrderController extends AppBaseController
      public function code(){
         $count = Order::all()->count();
         //dd($count);
-        $ks = "BAT";
+        $ks = "ORD";
         $tahun = date('Y');
         $bulan = date('m');
         $xbulan= "";

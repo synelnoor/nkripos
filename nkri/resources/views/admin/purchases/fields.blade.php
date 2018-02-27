@@ -5,10 +5,17 @@
 </div>
 
 <!-- Code Supplier Field -->
+@if($action=="edit")
 <div class="form-group col-sm-6">
     {!! Form::label('code_supplier', 'Code Supplier:') !!}
     {!! Form::text('code_supplier', null, ['class' => 'form-control']) !!}
 </div>
+@else
+<div class="form-group col-sm-6">
+    {!! Form::label('code_supplier', 'Code Supplier:') !!}
+    {!! Form::text('code_supplier', $codePo, ['class' => 'form-control']) !!}
+</div>
+@endif
 
 <!-- Jumlah Barang Field -->
 <div class="form-group col-sm-6">
@@ -34,10 +41,20 @@
 </div>
 
 <!-- Tanggal Field -->
+<?php
+$dt = \Carbon\Carbon::now();
+?>
+@if($action=="edit")
 <div class="form-group col-sm-6">
     {!! Form::label('tanggal', 'Tanggal:') !!}
-    {!! Form::date('tanggal', null, ['class' => 'form-control']) !!}
+    {!! Form::date('tanggal', $purchase->tanggal, ['class' => 'form-control']) !!}
 </div>
+@else
+<div class="form-group col-sm-6">
+    {!! Form::label('tanggal', 'Tanggal:') !!}
+    {!! Form::date('tanggal', $dt, ['class' => 'form-control']) !!}
+</div>
+@endif
 
 <!-- Submit Field -->
 <div class="form-group col-sm-12">

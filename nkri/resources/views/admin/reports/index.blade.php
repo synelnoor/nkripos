@@ -19,9 +19,12 @@
                             <div class="form-group col-sm-12">
                             <h1>Cek Laporan Harian</h1>
                          {!! Form::open(['url' => 'cek']) !!}
+                         <?php
+                            $dt = \Carbon\Carbon::now();
+                            ?>
                             <div class="form-group col-sm-6">
                                 {!! Form::label('tanggal', 'Tanggal:') !!}
-                                {!! Form::date('tanggal', null, ['class' => 'form-control']) !!}
+                                {!! Form::date('tanggal', $dt, ['class' => 'form-control']) !!}
                             </div>
                                 <div class="form-group col-sm-12">
                                   {!! Form::submit('Save', ['class' => 'btn btn-primary']) !!}
