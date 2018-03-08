@@ -34,8 +34,10 @@ class OrderItem extends Model
         'nama_barang',
         'qty',
         'harga',
+        'harga_beli',
         'jumlah',
-        'subtotal'
+        'subtotal',
+        'laba'
     ];
 
     /**
@@ -62,7 +64,9 @@ class OrderItem extends Model
         'code_barang' => 'required',
         'nama_barang' => 'required',
         'qty' => 'numeric',
-        'harga' => 'required'
+        'harga' => 'required',
+        'harga_beli'=>'required',
+        'laba'=>'required'
     ];
 
 

@@ -21,7 +21,9 @@ class CreateOrderItemsTable extends Migration
             $table->string('nama_barang');
             $table->integer('qty');
             $table->decimal('harga', 11, 2);
+            $table->decimal('harga_beli',11,2);
             $table->decimal('subtotal', 11, 2);
+            $table->decimal('laba',11,2);
             $table->timestamps();
             $table->softDeletes();
         });

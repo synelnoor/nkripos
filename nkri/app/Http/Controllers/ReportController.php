@@ -14,7 +14,12 @@ use Response;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Pembayaran;
+use App\Models\Purchase;
 use Carbon\Carbon;
+use Maatwebsite\Excel\Facades\Excel;
+use DB;
+use Barryvdh\DomPDF\Facade;
+
 
 class ReportController extends AppBaseController
 {
@@ -162,15 +167,18 @@ class ReportController extends AppBaseController
         $input = $request->all();
         $tgl= $request->tanggal;
 
-        //dd($tgl);
         $lapHar = Order::where('tanggal','=',"$tgl")
         ->where('status','=','cash')
+        ->with('OrderItem')
+        ->with('Pembayaran')
         ->get();
-        //dd($lapHar->toArray());
+       //dd($lapHar);
             $data=array( );
             $totHar=0;
             $totBar=0;
+            $totLab=0;
         foreach ($lapHar as $key => $value) {
+            //dd($value->toArray());
             $data[]=array( 
 
                     'id' =>$value['id'],
@@ -178,12 +186,14 @@ class ReportController extends AppBaseController
                     'code_order' =>$value['code_order'], 
                     'jumlah_barang' =>$value['jumlah_barang'], 
                     'total' =>$value['total'], 
+                    'total_laba'=>$value['total_laba'],
                     'status' =>$value['status'], 
                     'tanggal' =>$value['tanggal']
 
                 );
             $totBar += $value['jumlah_barang'];
             $totHar += $value['total'];
+            $totLab += $value['total_laba'];
         }
 
    //dd($totHar);
@@ -193,13 +203,216 @@ class ReportController extends AppBaseController
                 ->with('lapHar',$lapHar)
                 ->with('data',$data)
                 ->with('totBar',$totBar)
-                ->with('totHar',$totHar);
+                ->with('totLab',$totLab)
+                ->with('totHar',$totHar)
+                ->with('tgl',$tgl);
 
 
     }
 
     public function ExportExPJ(Request $request){
-        $inp=$request->all;
+        $inp=$request->all();
+        //dd($inp);
+        
+         $tgl = $request->tgl;
+
+
+        //excelScript
+        @\Excel::create('Laporan_PJ_Harian'.$tgl.'',function($excel)use($request){
+                $excel->sheet('lapHarSheet',function($sheet)use($request){
+
+
+              $tgl = $request->tgl;
+        //dd($tgl);
+
+        $lapHarEx = Order::where('tanggal','=',"$tgl")
+        ->where('status','=','cash')
+        ->with('OrderItem')
+        ->with('Pembayaran')
+        ->get();
+       //dd($lapHar);
+            $data=array( );
+            $totHar=0;
+            $totBar=0;
+            $totLab=0;
+        foreach ($lapHarEx as $key => $value) {
+            //dd($value->toArray());
+            $dataEx[]=array( 
+
+                    'id' =>$value['id'],
+                    'nama_customer' =>$value['nama_customer'], 
+                    'code_order' =>$value['code_order'], 
+                    'jumlah_barang' =>$value['jumlah_barang'], 
+                    'total' =>$value['total'], 
+                    'total_laba'=>$value['total_laba'],
+                    'status' =>$value['status'], 
+                    'tanggal' =>$value['tanggal']
+
+                );
+            $totBar += $value['jumlah_barang'];
+            $totHar += $value['total'];
+            $totLab += $value['total_laba'];
+        }
+               
+        $lapHarAr=$lapHarEx->toArray();
+                    
+                     $sheet->loadView('admin.reports.lapHarSheet')
+                       ->setWidth(array(
+                                    'A'     =>  10,
+                                    'B'     =>  25,
+                                    'C'     => 25,
+                                    'D'     => 25,
+                                    'E'     => 25,
+                                    'F'     => 25,
+                                    'G'     => 35,
+                                    'H'     => 25,
+                                    'I'     => 25,
+                                    'J'     => 25,
+                                    'K'     => 25,
+                                    'L'     => 25 
+                                ))
+
+                       ->with('lapHarEx',$lapHarEx)
+                       ->with('dataEx',$dataEx)
+                       ->with('totBar',$totBar)
+                       ->with('totHar',$totHar)
+                       ->with('totLab',$totLab)
+                       ->with('tgl',$tgl);
+
+                       
+
+
+
+                });
+            }
+        )->export('xls');
+
+        //EndExcel 
+
 
     }
+    public function lapPG(Request $request){
+        $input = $request->all();
+        //dd($input);
+        $start= $request->start;
+        $end= $request->end;
+        //dd($start);
+
+        $lapPG = Purchase::whereBetween('tanggal', [$start, $end])
+        ->get();
+       //dd($lapPG);
+            $data=array( );
+            $totHar=0;
+            $totBar=0;
+            $totLab=0;
+        foreach ($lapPG as $key => $value) {
+            //dd($value->toArray());
+            $data[]=array( 
+
+                'id' => $value['id'],
+                'nama_supplier' => $value['nama_supplier'],
+                'code_supplier' => $value['code_supplier'],
+                'jumlah_barang' => $value['jumlah_barang'],
+                'total' => $value['total'],
+                'deskripsi' => $value['deskripsi'],
+                'status' => $value['status'],
+                'tanggal' => $value['tanggal'],
+
+                );
+            $totBar += $value['jumlah_barang'];
+            $totHar += $value['total'];
+            
+        }
+
+   //dd($data);
+
+        // return redirect(route('reports.index'))
+        return view('admin.reports.lapPG')
+                ->with('lapPG',$lapPG)
+                ->with('data',$data)
+                ->with('totBar',$totBar)
+                ->with('totHar',$totHar)
+                ->with('start',$start)
+                ->with('end',$end);
+
+
+    }
+
+    public function ExportExPG(Request $request){
+        $inp=$request->all();
+        //dd($inp);
+       $start= $request->start;
+        $end= $request->end;
+
+        //excelScript
+        @\Excel::create('Laporan_Pengeluaran'.$start.'sd'.$end.'',function($excel)use($request){
+                $excel->sheet('iteminSheetR',function($sheet)use($request){
+
+        $start= $request->start;
+        $end= $request->end;
+        $lapPGEx = Purchase::whereBetween('tanggal', [$start, $end])
+        ->get();
+       //dd($lapPG);
+            $data=array( );
+            $totHar=0;
+            $totBar=0;
+            $totLab=0;
+        foreach ($lapPGEx as $key => $value) {
+            //dd($value->toArray());
+            $dataEx[]=array( 
+
+                'id' => $value['id'],
+                'nama_supplier' => $value['nama_supplier'],
+                'code_supplier' => $value['code_supplier'],
+                'jumlah_barang' => $value['jumlah_barang'],
+                'total' => $value['total'],
+                'deskripsi' => $value['deskripsi'],
+                'status' => $value['status'],
+                'tanggal' => $value['tanggal'],
+
+                );
+            $totBar += $value['jumlah_barang'];
+            $totHar += $value['total'];
+            
+        }
+        //dd($totBar);
+               
+        $lapPGAr=$lapPGEx->toArray();
+                    
+                     $sheet->loadView('admin.reports.lapPGSheet')
+                       ->setWidth(array(
+                                    'A'     =>  10,
+                                    'B'     =>  25,
+                                    'C'     => 25,
+                                    'D'     => 25,
+                                    'E'     => 25,
+                                    'F'     => 25,
+                                    'G'     => 35,
+                                    'H'     => 25,
+                                    'I'     => 25,
+                                    'J'     => 25,
+                                    'K'     => 25,
+                                    'L'     => 25 
+                                ))
+
+                       ->with('lapPGEx',$lapPGEx)
+                       ->with('dataEx',$dataEx)
+                       ->with('totBar',$totBar)
+                       ->with('totHar',$totHar)
+                       ->with('start',$start)
+                       ->with('end',$end);
+
+                       
+
+
+
+                });
+            }
+        )->export('xls');
+
+        //EndExcel 
+
+
+    }
+
 }

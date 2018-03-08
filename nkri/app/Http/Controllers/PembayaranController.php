@@ -81,9 +81,10 @@ class PembayaranController extends AppBaseController
 
 
         //dd($order);
-        //$pembayaran = $this->pembayaranRepository->create($input);
+       
         $status=array('status' =>'cash');
         $order = $this->orderRepository->update($status,$order['id']);
+        $pembayaran= $this->pembayaranRepository->create($input);
 
         Flash::success('Pembayaran saved successfully.');
 

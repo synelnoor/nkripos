@@ -19,6 +19,7 @@ class CreateOrdersTable extends Migration
             $table->string('code_order');
             $table->integer('jumlah_barang');
             $table->decimal('total', 11, 2);
+            $table->decimal('total_laba',11,2);
             $table->enum('status', ['cash','pending']);
             $table->date('tanggal');
             $table->timestamps();

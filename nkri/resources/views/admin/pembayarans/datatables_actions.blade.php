@@ -4,7 +4,10 @@
     <a href="{{ route('pembayarans.show', $id) }}" class='btn btn-default btn-xs'>
         <i class="glyphicon glyphicon-eye-open"></i>
     </a>
-    <a href="{{ route('pembayarans.edit', $id) }}" class='btn btn-default btn-xs'>
+    <!-- <a href="{{ route('pembayarans.edit', $id) }}" class='btn btn-default btn-xs'>
+        <i class="glyphicon glyphicon-edit"></i>
+    </a> -->
+    <a href="{{ route('orders.edit', $id) }}" class='btn btn-default btn-xs'>
         <i class="glyphicon glyphicon-edit"></i>
     </a>
     {!! Form::button('<i class="glyphicon glyphicon-trash"></i>', [

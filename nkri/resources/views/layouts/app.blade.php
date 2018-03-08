@@ -28,12 +28,12 @@
         <header class="main-header">
 
             <!-- Logo -->
-            <a href="{{URL('home')}}" class="logo">
+            <a href="{{URL('home')}}" class="logo" style="background-color:#994d00">
                 <b>NKRI</b>
             </a>
 
             <!-- Header Navbar -->
-            <nav class="navbar navbar-static-top" role="navigation">
+            <nav class="navbar navbar-static-top" role="navigation" style="background-color:#994d00">
                 <!-- Sidebar toggle button-->
                 <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
                     <span class="sr-only">Toggle navigation</span>

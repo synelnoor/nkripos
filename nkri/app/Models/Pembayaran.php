@@ -57,7 +57,7 @@ class Pembayaran extends Model
     ];
 
      public function order() {
-        return $this->hasMany('App\Models\Order');
+        return $this->belongsTo('App\Models\Order','order_id','id');
     }
 
     

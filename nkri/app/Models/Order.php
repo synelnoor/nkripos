@@ -32,6 +32,7 @@ class Order extends Model
         'code_order',
         'jumlah_barang',
         'total',
+        'total_laba',
         'status',
         'tanggal'
     ];
@@ -65,5 +66,8 @@ class Order extends Model
 
      public function OrderItem() {
         return $this->hasMany('App\Models\OrderItem');
+    }
+    public function Pembayaran(){
+        return $this->belongsTo('App\Models\Pembayaran','id','order_id');
     }
 }

@@ -74,10 +74,10 @@ class OrderController extends AppBaseController
     public function store(CreateOrderRequest $request)
     {
         $input = $request->all();
- //dd($input);
+// dd($input);
         $order = $this->orderRepository->create($input);
         $barang= Barang::where('id',$request->id);
-        //dd($request['row']);
+       // dd($request['row']);
          foreach($request['row'] as $item) {
             $dataOrderItem = array(
                 'order_id'=>$order->id,
@@ -86,12 +86,15 @@ class OrderController extends AppBaseController
                 'nama_barang'=>$item['nama_barang'],
                 'qty' =>$item['qty'],
                 'harga' =>$item['harga'],
-                'subtotal' => $item['subtotal']
+                'harga_beli' =>$item['harga_beli'],
+                'subtotal' => $item['subtotal'],
+                'laba' => $item['laba']
                
             );
              $this->orderItemRepository->create($dataOrderItem);
             
         }
+       
        
         Flash::success('Order saved successfully.');
 
@@ -153,7 +156,10 @@ class OrderController extends AppBaseController
                         'nama_barang'=>$item['nama_barang'],
                         'qty'=>$item['qty'],
                         'harga'=>$item['harga'],
-                        'subtotal'=>$item['subtotal']);
+                        'harga_beli' =>$item['harga_beli'],
+                        'subtotal'=>$item['subtotal'],
+                        'laba' => $item['laba']
+                        );
         }
 
 //dd($data);
@@ -183,7 +189,6 @@ class OrderController extends AppBaseController
             return redirect(route('orders.index'));
         }
 
-        $order = $this->orderRepository->update($request->all(), $id);
 
         $delId = $request['delete_row'];
                   if ($delId!='')
@@ -204,7 +209,9 @@ class OrderController extends AppBaseController
                 'nama_barang'=>$item['nama_barang'],
                 'qty' =>$item['qty'],
                 'harga' =>$item['harga'],
-                'subtotal' => $item['subtotal']
+                'harga_beli' =>$item['harga_beli'],
+                'subtotal' => $item['subtotal'],
+                'laba' => $item['laba']
                
             );
                 if($item['id']=='')
@@ -217,6 +224,8 @@ class OrderController extends AppBaseController
                     // return redirect(route('itemins.index'));
                     }
         }
+
+        $order = $this->orderRepository->update($request->all(), $id);
 
         Flash::success('Order updated successfully.');
 
@@ -245,6 +254,7 @@ class OrderController extends AppBaseController
 
 
          DB::table('order_items')->where('order_id', '=', $id)->delete();
+
         $this->orderRepository->delete($id);
 
         Flash::success('Order deleted successfully.');
@@ -322,7 +332,7 @@ class OrderController extends AppBaseController
                 //dd($items);
                 $data=array();
                 foreach ($items as $item) {
-                        $data[]=array('value'=>$item->nama_barang,'id'=>$item->id,'harga_jual'=>$item->harga_jual,'code_barang'=>$item->code_barang);
+                        $data[]=array('value'=>$item->nama_barang,'id'=>$item->id,'harga_jual'=>$item->harga_jual,'harga_beli'=>$item->harga_beli,'code_barang'=>$item->code_barang);
                 }
                 //dd($data);
                 if(count($data))
