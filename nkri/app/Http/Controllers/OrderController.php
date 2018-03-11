@@ -162,8 +162,9 @@ class OrderController extends AppBaseController
                         );
         }
 
-//dd($data);
-        return view('admin.orders.edit')->with('order', $order)
+//dd($order);
+        return view('admin.orders.edit')
+            ->with('order', $order)
             ->with('code',$code)
             ->with('outcode', $outcode)
             ->with('data',$data)

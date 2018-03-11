@@ -176,6 +176,7 @@ class ReportController extends AppBaseController
             $data=array( );
             $totHar=0;
             $totBar=0;
+            $laba=0;
             $totLab=0;
         foreach ($lapHar as $key => $value) {
             //dd($value->toArray());
@@ -194,9 +195,11 @@ class ReportController extends AppBaseController
             $totBar += $value['jumlah_barang'];
             $totHar += $value['total'];
             $totLab += $value['total_laba'];
+            $laba += $value['total_laba'];
+            $totLab=$totHar-$laba;
         }
 
-   //dd($totHar);
+   //dd($totLab);
 
         // return redirect(route('reports.index'))
         return view('admin.reports.lapHar')
@@ -234,6 +237,7 @@ class ReportController extends AppBaseController
             $data=array( );
             $totHar=0;
             $totBar=0;
+            $laba=0;
             $totLab=0;
         foreach ($lapHarEx as $key => $value) {
             //dd($value->toArray());
@@ -251,9 +255,10 @@ class ReportController extends AppBaseController
                 );
             $totBar += $value['jumlah_barang'];
             $totHar += $value['total'];
-            $totLab += $value['total_laba'];
+            $laba += $value['total_laba'];
+            $totLab=$totHar-$laba;
         }
-               
+               //dd($totLab);
         $lapHarAr=$lapHarEx->toArray();
                     
                      $sheet->loadView('admin.reports.lapHarSheet')

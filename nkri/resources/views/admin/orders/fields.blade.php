@@ -94,7 +94,8 @@
 
 
 <div class="form-group col-sm-6 pull-right">
-  @if ($action=='edit')
+  @if ($action =='edit')
+ 
 <!-- Jumlah barang  -->
 <div class="form-group col-sm-6 ">
     {!! Form::label('jumlah_barang', 'Jumlah Barang:') !!}
@@ -109,10 +110,11 @@
 
 </div>
 <!-- TOTAL Laba -->
-
-  <input type="hidden" name="total_laba" class="form-control totalLaba" id="totalLaba" value="{{$order->total_laba}}">
+{!! Form::hidden('total_laba',$order->total_laba, ['class' => 'form-control totalLaba','id'=>'totalLaba'] ) !!}
+ 
     
 @else
+{{'coba'}}
 <!-- Jumlah barang  -->
 <div class="form-group col-sm-6 ">
     {!! Form::label('jumlah_barang', 'Jumlah Barang:') !!}
@@ -127,8 +129,7 @@
 
 </div>
 <!-- TOTAL Laba -->
-
-  <input type="hidden" name="total_laba" class="form-control totalLaba" id="totalLaba">
+  {!! Form::hidden('total_laba',$order->total_laba, ['class' => 'form-control totalLaba','id'=>'totalLaba'] ) !!}
 @endif
 
 </div>
@@ -148,6 +149,7 @@
 
 $listoutcode = json_encode(@$outcode);
 $listinitems = json_encode(@$data);
+$listOrder = json_encode(@$order);
 ?>
 
 
@@ -231,7 +233,7 @@ $listinitems = json_encode(@$data);
        html_code += "</tr>";  
        $('#crud_table').append(html_code);
 
-       console.log(count)
+       //console.log(count)
       
      });
      
@@ -260,7 +262,7 @@ $listinitems = json_encode(@$data);
          reCalculate.call(delete_row);
        });
 
-       $(document).on('click', '.test', function(){
+       $(document).on('click', '#test', function(){
         var row = $(this).closest("table");
          reCalculate.call(row);
        });
@@ -294,16 +296,16 @@ $listinitems = json_encode(@$data);
               var laba = value * value3;
               console.log(total);
               jumlah += value;
-              //console.log(jumlah);
+              console.log(jumlah);
               grandTotal += total;
               grandLaba += laba;
             $( ".form-control.subtotal",row ).val(total.toFixed(2) );
             $( ".form-control.laba",row ).val(laba.toFixed(2) );
           });
 
-          $(".jumlah").val(jumlah);
-          $(".total").val( grandTotal.toFixed(2));
-          $(".totalLaba").val(grandLaba.toFixed(2));
+          $(".form-control.jumlah").val(jumlah);
+          $(".form-control.total").val( grandTotal.toFixed(2));
+          $(".form-control.totalLaba").val(grandLaba.toFixed(2));
       }
 
        function additionalTable()
@@ -330,7 +332,8 @@ $listinitems = json_encode(@$data);
     {
         
         details = <?php echo $listinitems; ?>;
-        console.log(details);
+        order = <?php echo $listOrder; ?>;
+        console.log(order)
         for (i = 0; i < details.length; i++) {
             if (i>0)
             {
@@ -348,6 +351,7 @@ $listinitems = json_encode(@$data);
             $("input[name='row["+i+"][order_id]']").val(details[i]['order_id']);
             //$("input[name='row["+i+"][total_individual]']").val(details[i]['unit_price']*details[i]['qty']);
         }
+
 
         $('#testbtn').click();
 
