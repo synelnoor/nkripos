@@ -129,7 +129,7 @@
 
 </div>
 <!-- TOTAL Laba -->
-  {!! Form::hidden('total_laba',$order->total_laba, ['class' => 'form-control totalLaba','id'=>'totalLaba'] ) !!}
+  {!! Form::hidden('total_laba',null, ['class' => 'form-control totalLaba','id'=>'totalLaba'] ) !!}
 @endif
 
 </div>
@@ -332,8 +332,7 @@ $listOrder = json_encode(@$order);
     {
         
         details = <?php echo $listinitems; ?>;
-        order = <?php echo $listOrder; ?>;
-        console.log(order)
+        
         for (i = 0; i < details.length; i++) {
             if (i>0)
             {
