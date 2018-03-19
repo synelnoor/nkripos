@@ -46,6 +46,8 @@ Route::resource('reports','ReportController');
 //laporanRoute
 Route::post('cekPJ','ReportController@lapHar');
 Route::post('excelPJH',['as'=>'reports.lapHarSheet','uses'=>'ReportController@ExportExPJ']);
+Route::post('cekPJB','ReportController@lapBul');
+Route::post('excelPJB',['as'=>'reports.lapBulSheet','uses'=>'ReportController@ExportExPJB']);
 Route::post('cekPG','ReportController@lapPG');
 Route::post('excelPG',['as'=>'reports.lapPGSheet','uses'=>'ReportController@ExportExPG']);
 

@@ -20,6 +20,7 @@
         "mike42/escpos-php": "^1.6",
         "yajra/laravel-datatables-buttons": "2.0",
         "yajra/laravel-datatables-oracle": "~7.0"
+       
         
     },
     "require-dev": {

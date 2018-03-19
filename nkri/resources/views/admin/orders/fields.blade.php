@@ -114,7 +114,6 @@
  
     
 @else
-{{'coba'}}
 <!-- Jumlah barang  -->
 <div class="form-group col-sm-6 ">
     {!! Form::label('jumlah_barang', 'Jumlah Barang:') !!}
@@ -149,10 +148,8 @@
 
 $listoutcode = json_encode(@$outcode);
 $listinitems = json_encode(@$data);
-$listOrder = json_encode(@$order);
+
 ?>
-
-
 @section('scripts')
 
 <!-- autocomplete -->
@@ -332,7 +329,8 @@ $listOrder = json_encode(@$order);
     {
         
         details = <?php echo $listinitems; ?>;
-        
+       
+       
         for (i = 0; i < details.length; i++) {
             if (i>0)
             {

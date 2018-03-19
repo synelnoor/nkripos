@@ -296,6 +296,153 @@ class ReportController extends AppBaseController
 
 
     }
+//PJ BUlanan
+        public function lapBul(Request $request){
+        $input = $request->all();
+        //dd($input);
+
+       
+        $start= $request->start;
+        
+        $end= $request->end;
+
+        $lapBul = Order::whereBetween('tanggal',[$start,$end])
+        ->where('status','=','cash')
+        ->with('OrderItem')
+        ->with('Pembayaran')
+        ->get();
+       //dd($lapBul);
+            $data=array( );
+            $totHar=0;
+            $totBar=0;
+            $laba=0;
+            $totLab=0;
+        foreach ($lapBul as $key => $value) {
+            //dd($value->toArray());
+            $data[]=array( 
+
+                    'id' =>$value['id'],
+                    'nama_customer' =>$value['nama_customer'], 
+                    'code_order' =>$value['code_order'], 
+                    'jumlah_barang' =>$value['jumlah_barang'], 
+                    'total' =>$value['total'], 
+                    'total_laba'=>$value['total_laba'],
+                    'status' =>$value['status'], 
+                    'tanggal' =>$value['tanggal']
+
+                );
+            $totBar += $value['jumlah_barang'];
+            $totHar += $value['total'];
+            $totLab += $value['total_laba'];
+            $laba += $value['total_laba'];
+            $totLab=$totHar-$laba;
+        }
+
+   //dd($totLab);
+
+        // return redirect(route('reports.index'))
+        return view('admin.reports.lapBul')
+                ->with('lapBul',$lapBul)
+                ->with('data',$data)
+                ->with('totBar',$totBar)
+                ->with('totLab',$totLab)
+                ->with('totHar',$totHar)
+                ->with('start',$start)
+                ->with('end',$end);
+
+
+    }
+
+    public function ExportExPJB(Request $request){
+        $inp=$request->all();
+        //dd($inp);
+        
+        $start= $request->start;
+        $end= $request->end;
+
+
+
+        //excelScript
+        @\Excel::create('Laporan_PJ_bulanan'.$start.'sd'.$end.'',function($excel)use($request){
+                $excel->sheet('lapBulSheet',function($sheet)use($request){
+
+
+            $start= $request->start;
+            $end= $request->end;
+        //dd($tgl);
+
+        $lapBulEx = Order::whereBetween('tanggal',[$start,$end])
+        ->where('status','=','cash')
+        ->with('OrderItem')
+        ->with('Pembayaran')
+        ->get();
+       //dd($lapBul);
+            $data=array( );
+            $totHar=0;
+            $totBar=0;
+            $laba=0;
+            $totLab=0;
+        foreach ($lapBulEx as $key => $value) {
+            //dd($value->toArray());
+            $dataEx[]=array( 
+
+                    'id' =>$value['id'],
+                    'nama_customer' =>$value['nama_customer'], 
+                    'code_order' =>$value['code_order'], 
+                    'jumlah_barang' =>$value['jumlah_barang'], 
+                    'total' =>$value['total'], 
+                    'total_laba'=>$value['total_laba'],
+                    'status' =>$value['status'], 
+                    'tanggal' =>$value['tanggal']
+
+                );
+            $totBar += $value['jumlah_barang'];
+            $totHar += $value['total'];
+            $laba += $value['total_laba'];
+            $totLab=$totHar-$laba;
+        }
+               //dd($totLab);
+        $lapBulAr=$lapBulEx->toArray();
+                    
+                     $sheet->loadView('admin.reports.lapBulSheet')
+                       ->setWidth(array(
+                                    'A'     =>  10,
+                                    'B'     =>  25,
+                                    'C'     => 25,
+                                    'D'     => 25,
+                                    'E'     => 25,
+                                    'F'     => 25,
+                                    'G'     => 35,
+                                    'H'     => 25,
+                                    'I'     => 25,
+                                    'J'     => 25,
+                                    'K'     => 25,
+                                    'L'     => 25 
+                                ))
+
+                       ->with('lapBulEx',$lapBulEx)
+                       ->with('dataEx',$dataEx)
+                       ->with('totBar',$totBar)
+                       ->with('totHar',$totHar)
+                       ->with('totLab',$totLab)
+                       ->with('start',$start)
+                       ->with('end',$end);
+
+                       
+
+
+
+                });
+            }
+        )->export('xls');
+
+        //EndExcel 
+
+
+    }
+//end PJ bulanan
+
+
     public function lapPG(Request $request){
         $input = $request->all();
         //dd($input);
